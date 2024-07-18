@@ -1,0 +1,22 @@
+header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  height: 90px;
+}
+.img-fluid {
+  max-width: 30%;
+  height: auto;
+}
+.nav-link {
+  margin-right: 1.5rem;
+  text-decoration: none;
+  color: black;
+}
+@media (max-width: 768px) {
+  .img-fluid {
+    max-width: 50%;
+    margin-left: 1rem;
+  }
+}

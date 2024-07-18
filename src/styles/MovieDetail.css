@@ -1,0 +1,40 @@
+.div-movie-detail {
+  min-height: 75vh;
+}
+.movie-detail {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 4rem;
+}
+.movie-detail-img {
+  margin-right: 4rem;
+  max-width: 300px;
+  max-height: 400px;
+}
+.movie-detail-column {
+  display: flex;
+  flex-direction: column;
+  max-width: 40%;
+}
+
+@media (max-width: 768px) {
+  .movie-detail {
+    margin-top: 0;
+    gap: 0;
+    transform: scale(0.75);
+  }
+  .movie-detail-img {
+    margin-right: 0;
+    justify-content: center;
+    max-width: none;
+    max-height: none;
+  }
+  .movie-detail {
+    flex-direction: column;
+  }
+  .movie-detail-column {
+    max-width: 100%;
+  }
+}

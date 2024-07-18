@@ -1,0 +1,182 @@
+.search-container {
+  position: relative;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.loading-overlay::after {
+  content: '';
+  width: 75px;
+  height: 75px;
+  border: 15px solid white;
+  border-top-color: #ff4d6d;
+  border-radius: 50%;
+  animation: loading 0.75s ease infinite;
+}
+@keyframes loading {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.search.blurred {
+  filter: blur(5px);
+  pointer-events: none;
+  user-select: none;
+}
+
+.search {
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-bar {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  background: #ffb3c1;
+  border-radius: 60px;
+  padding: 10px 20px;
+  backdrop-filter: blur(4px) saturate(1.2);
+}
+
+.search-bar input {
+  background: transparent;
+  flex: 1;
+  border: 0;
+  outline: none;
+  padding: 0 20px;
+  font-size: 20px;
+  color: black;
+}
+
+.search-bar button {
+  border: 0;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  background: #ff4d6d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-bar button img {
+  width: 25px;
+}
+
+ul.previous-search {
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.previous-search-li {
+  width: 30vh;
+  height: 20px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  background-color: #f1f1f1;
+  padding: 10px;
+}
+
+.search-item {
+  cursor: pointer;
+  flex-grow: 1;
+}
+
+.search-item:hover {
+  text-decoration: underline;
+}
+
+.div-buttons {
+  display: flex;
+  flex-direction: row;
+  margin: 1rem;
+  gap: 1rem;
+}
+
+.button {
+  width: 120px;
+  height: 30px;
+  color: white;
+  font-size: large;
+  font-weight: 600;
+  background-color: red;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+.dropdown {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  right: 0;
+  background: #fff0f3;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 0;
+  list-style: none;
+}
+
+.dropdown button {
+  border: 0;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  background: #ff4d6d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dropdown button img {
+  width: 15px;
+}
+
+.dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+}
+
+.dropdown-item:hover {
+  background: #f1f1f1;
+}
