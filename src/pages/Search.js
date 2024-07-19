@@ -4,7 +4,7 @@ import { fetchMovies, fetchMovieDetails } from '../services/api';
 import MovieList from '../components/MovieList';
 import '../styles/Search.css';
 
-const initialQueries = ['avengers', 'batman', 'guardian', 'john', 'e']; // Queries to fetch a diverse list of movies
+const initialQueries = ['avengers', 'batman', 'guardian', 'john']; // Queries to fetch a diverse list of movies
 
 const Search = () => {
   const [query, setQuery] = useState('');
