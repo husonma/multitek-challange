@@ -27,14 +27,13 @@ const Search = () => {
           }
         }
 
-        // Fetch full details for each movie
         const movieDetailsPromises = combinedMovies.map((movie) =>
           fetchMovieDetails(movie.imdbID)
         );
         const movieDetails = await Promise.all(movieDetailsPromises);
 
-        setAllMovies(movieDetails); // Store the complete list of movies with details
-        setMovies(movieDetails.slice(0, 20)); // Initialize the filtered movies with all movies
+        setAllMovies(movieDetails);
+        setMovies(movieDetails.slice(0, 20));
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -51,7 +50,6 @@ const Search = () => {
     }
 
     setError(null);
-    // Filter the movies based on the search query
     const filteredMovies = allMovies.filter((movie) =>
       movie.Title.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -62,12 +60,11 @@ const Search = () => {
   const handleClear = () => {
     setQuery('');
     setError(null);
-    // Reset to the initial list of movies
     setMovies(allMovies);
   };
 
   const handleDeleteSearch = (search, event) => {
-    event.stopPropagation(); // Stop the event from propagating to the parent elements
+    event.stopPropagation();
     setPreviousSearches((prev) => prev.filter((item) => item !== search));
   };
 
