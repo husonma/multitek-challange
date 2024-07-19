@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { fetchMovies } from '../services/api';
+import React, { useState, useEffect, useContext } from 'react';
+import { MovieContext } from '../contexts/MovieContext';
+import { fetchMovies, fetchMovieDetails } from '../services/api';
 import MovieList from '../components/MovieList';
 import '../styles/Search.css';
 
-const initialQueries = ['avengers', 'batman', 'arthur', 'iron', 'e']; // Queries to fetch a diverse list of movies
+const initialQueries = ['avengers', 'batman', 'guardian', 'john', 'e']; // Queries to fetch a diverse list of movies
 
 const Search = () => {
   const [query, setQuery] = useState('');
-  const [movies, setMovies] = useState([]);
-  const [allMovies, setAllMovies] = useState([]); // Store all movies here
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [previousSearches, setPreviousSearches] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+
+  const { movies, setMovies, allMovies, setAllMovies } =
+    useContext(MovieContext);
 
   useEffect(() => {
     const fetchInitialMovies = async () => {
@@ -24,16 +26,23 @@ const Search = () => {
             combinedMovies = [...combinedMovies, ...data.Search];
           }
         }
-        setAllMovies(combinedMovies); // Store the complete list of movies
-        setMovies(combinedMovies.slice(0, 20)); // Display the first 20 movies
+
+        // Fetch full details for each movie
+        const movieDetailsPromises = combinedMovies.map((movie) =>
+          fetchMovieDetails(movie.imdbID)
+        );
+        const movieDetails = await Promise.all(movieDetailsPromises);
+
+        setAllMovies(movieDetails); // Store the complete list of movies with details
+        setMovies(movieDetails.slice(0, 20)); // Initialize the filtered movies with all movies
+        setLoading(false);
       } catch (err) {
         setError(err.message);
-      } finally {
         setLoading(false);
       }
     };
     fetchInitialMovies();
-  }, []);
+  }, [setAllMovies, setMovies]);
 
   const handleSearch = (searchQuery = query) => {
     if (!searchQuery.trim()) {
@@ -41,24 +50,20 @@ const Search = () => {
       return;
     }
 
-    setLoading(true);
     setError(null);
-
     // Filter the movies based on the search query
     const filteredMovies = allMovies.filter((movie) =>
       movie.Title.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setMovies(filteredMovies);
     setPreviousSearches((prev) => [...new Set([searchQuery, ...prev])]);
-    setLoading(false);
-    setShowDropdown(false);
   };
 
   const handleClear = () => {
     setQuery('');
     setError(null);
-    // Display the first 20 movies from the initial fetch
-    setMovies(allMovies.slice(0, 20));
+    // Reset to the initial list of movies
+    setMovies(allMovies);
   };
 
   const handleDeleteSearch = (search, event) => {
@@ -78,7 +83,11 @@ const Search = () => {
 
   return (
     <div className="search-container">
-      {loading && <div className="loading-overlay"></div>}
+      {loading && (
+        <div className="loading-overlay">
+          <div className="loading-spinner"></div>
+        </div>
+      )}
       <div className={`search ${loading ? 'blurred' : ''}`}>
         <h2>Search Movies</h2>
         <div className="search-bar" onBlur={handleBlur} tabIndex="0">
